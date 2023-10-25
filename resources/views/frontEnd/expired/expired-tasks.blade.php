@@ -5,69 +5,49 @@ Expired Taks
 @endsection
 
 @section('content')
-<div class="container-fluid p-2">
-    <div class="row d-flex align-items-center mb-3">
-        <div class="col-md-6 d-flex justify-content-start">
-            <a href="{{route('home')}}" class="btn btn-primary">Home</a>
-        </div>
-        <div class="col-md-6 d-flex justify-content-end">
-            <form action="{{route('logout')}}" method="post">
-                @csrf
-                <button class="btn btn-danger">Logout</button>
-            </form>
-        </div>
-    </div>
-    <div class="row d-flex justify-content-around align-items-center">
-        <div class="tasks-list col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="border p-4 rounded">
-                        <div class="card-title d-flex align-items-center justify-content-between">
-                            <h5 class="mb-0">Task List</h5>
-                            <div class="col-md-4">
-                                <form method="post" action="{{route('expired.tasks')}}">
-                                    @csrf
-                                    <div class="form-group row mb-3">
-                                        <div class="col-md-12">
-                                            <input type="date" class="form-control" id="date" name="date" value="{{ date('Y-m-d') }}">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="d-grid col-md-12 mx-auto">
-                                            <button type="submit" class="btn btn-primary">Search by Date</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <hr />
+<section class="vh-100" style="background-color: #190482;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-9 col-xl-7">
+                <div class="card rounded-3 "style=" background-color: #7752FE;">
+                    <div class="card-body p-4">
+                        <h2 class="text-center my-3 pb-3 text-light">To Do App</h2>
 
-                        <div class="table-responsive">
-                            <table id="example2" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>sl</th>
-                                        <th>Tasks</th>
-                                        <th>Deadline</th>
-                                    </tr>
-                                </thead>
-                                @php $i=1 @endphp
-                                @foreach($items as $item)
-                                <tbody>
-                                    <tr>
-                                        <td>{{$i++}}</td>
-                                        <td>{{$item->task}}</td>
-                                        <td>{{$item->deadline}}</td>
-                                    </tr>
-                                </tbody>
-                                @endforeach
-                            </table>
-                        </div>
+                        <table class="table mb-4">
+                            <thead>
+                                <tr class="align-items-center justify-content-around">
+                                    <th>sl</th>
+                                    <th>Tasks</th>
+                                    <th>Deadline</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            @php $i=1 @endphp
+                            @foreach($items as $item)
+                            <tbody>
+                                <tr>
+                                    <td>{{$i++}}</td>
+                                    <td>{{$item->task}}</td>
+                                    <td>{{$item->deadline}}</td>
+
+                                    <td class="d-flex">
+                                        <a href="{{route('task.edit',['id'=>$item->id])}}" class="btn btn-warning">Edit</a>
+                                        <form action="{{route('delete.task')}}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{$item->id}}">
+                                            <button type="submit" class="btn btn-danger ms-2">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            @endforeach
+                        </table>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 @endsection

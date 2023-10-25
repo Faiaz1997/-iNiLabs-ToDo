@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('uid');
             $table->string('task');
             $table->time('deadline')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

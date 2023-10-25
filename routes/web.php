@@ -31,6 +31,7 @@ Route::middleware([
     Route::get('/',[TodoController::class,'index'])->name('home');
     Route::post('/add-task',[TodoController::class,'addTask'])->name('add.task');
     Route::post('/expired-tasks',[TodoController::class,'expiredTasks'])->name('expired.tasks');
+    Route::get('/status/{id}', [TodoController::class, 'status'])->name('status');
     Route::get('/task-edit/{id}',[TodoController::class,'taskEdit'])->name('task.edit');
     Route::post('/update-task',[TodoController::class,'updateTask'])->name('update.task');
     Route::post('/delete-task',[TodoController::class,'deleteTask'])->name('delete.task');

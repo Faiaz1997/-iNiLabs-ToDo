@@ -40,6 +40,18 @@ class TodoController extends Controller
             
         ],);
     }
+
+    public function status($id){
+        $todo = todo::find($id);
+        if ($todo->status == 1){
+            $todo->status = 2;
+        }
+        else{
+            $todo->status = 1;
+        }
+        $todo->save();
+        return back();
+     }
     
     public function taskEdit($id)
     {
