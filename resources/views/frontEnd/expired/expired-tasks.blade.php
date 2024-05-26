@@ -1,53 +1,62 @@
 @extends('frontEnd.master')
 
 @section('title')
-Expired Taks
+Expired Tasks
 @endsection
 
 @section('content')
-<section class="vh-100" style="background-color: #190482;">
+<style>
+    .content-section {
+        min-height: calc(100vh - 70px);
+        /* Subtracting navbar height */
+    }
+</style>
+<section class="content-section" style="background-color: #190482;">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-9 col-xl-7">
-                <div class="card rounded-3 "style=" background-color: #7752FE;">
+            <div class="col-lg-10 col-xl-8">
+                <div class="card rounded-3 shadow" style="background-color: #7752FE;">
+                    <div class="card-header bg-white p-4" style="color: #190482;">
+                        <h2 class="text-center">Expired Tasks</h2>
+                    </div>
                     <div class="card-body p-4">
-                        <h2 class="text-center my-3 pb-3 text-light">To Do App</h2>
-
-                        <table class="table mb-4">
-                            <thead>
-                                <tr class="align-items-center justify-content-around">
-                                    <th>sl</th>
-                                    <th>Tasks</th>
-                                    <th>Deadline</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            @php $i=1 @endphp
-                            @foreach($items as $item)
-                            <tbody>
-                                <tr>
-                                    <td>{{$i++}}</td>
-                                    <td>{{$item->task}}</td>
-                                    <td>{{$item->deadline}}</td>
-
-                                    <td class="d-flex">
-                                        <a href="{{route('task.edit',['id'=>$item->id])}}" class="btn btn-warning">Edit</a>
-                                        <form action="{{route('delete.task')}}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{$item->id}}">
-                                            <button type="submit" class="btn btn-danger ms-2">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            @endforeach
-                        </table>
-
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped text-light">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Task</th>
+                                        <th scope="col">Deadline</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php $i = 1 @endphp
+                                    @foreach($items as $item)
+                                    <tr class="text-center">
+                                        <th scope="row">{{ $i++ }}</th>
+                                        <td>{{ $item->task }}</td>
+                                        <td>{{ $item->deadline }}</td>
+                                        <td>
+                                            <a href="{{ route('task.edit', ['id' => $item->id]) }}" class="btn btn-primary">Edit</a>
+                                            <form action="{{ route('delete.task') }}" method="post" class="d-inline">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @if($items->isEmpty())
+                            <p class="text-center text-light mt-3">No expired tasks available.</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 @endsection

@@ -5,55 +5,51 @@ Edit Task
 @endsection
 
 @section('content')
-<div class="container-fluid p-2">
-<div class="row d-flex align-items-center mb-3">
-        <div class="col-md-6 d-flex justify-content-start">
-            <a href="{{route('home')}}" class="btn btn-primary">Home</a>
-        </div>
-        <div class="col-md-6 d-flex justify-content-end">
-            <form action="{{route('logout')}}" method="post">
-                @csrf
-                <button class="btn btn-danger">Logout</button>
-            </form>
-        </div>
-    </div>
-    <div class=" row d-flex justify-content-around align-items-center">
-        <div class="tasks col-md-4 d-flex justify-content-start mt-5 p-4 card">
-            <div class="row mb-3 card-header">
-                <div class="col-md-12 d-flex justify-content-between">
-                    <div class="col-md-12">
-                        <h1>Want to change your plan?</h1>
+
+<style>
+    .content-section {
+        min-height: calc(100vh - 70px); /* Subtracting navbar height */
+    }
+</style>
+<section class="content-section" style="background-color: #190482;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-8 col-lg-6">
+                <div class="card rounded-3 shadow" style="background-color: #7752FE;">
+                    <div class="card-header bg-white p-4" style="color: #190482;">
+                        <h2 class="text-center">Want to change your PLAN?</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="{{ route('update.task') }}" method="post">
+                            @csrf
+                            <input type="hidden" class="form-control" id="id" name="id" value="{{ $items->id }}">
+
+                            <div class="mb-3">
+                                <label for="task" class="form-label text-light"><h6>Task</h6></label>
+                                <input type="text" class="form-control" id="task" name="task" value="{{ $items->task }}" required>
+                                <div id="taskHelp" class="form-text text-light">Update your task.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="deadline" class="form-label text-light"><h6>Deadline</h6></label>
+                                <input type="time" class="form-control" id="deadline" name="deadline" value="{{ $items->deadline }}" required>
+                                <div id="deadlineHelp" class="form-text text-light">Update the deadline for your task.</div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-warning">Update Task</button>
+                            </div>
+                        </form>
+
+                        @if (session('message'))
+                            <div class="alert alert-info mt-3">
+                                {{ session('message') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
-            <div class="row d-flex align-items-center">
-                <div class="col-md-12">
-                    <form action="{{route('update.task')}}" method="post">
-                        @csrf
-                        <div class="">
-                            <input type="hidden" class="form-control" id="id" name="id" value="{{$items->id}}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="task" class="form-label ">
-                                <h6>Tasks</h6>
-                            </label>
-                            <input type="text" class="form-control" id="task" name="task" value="{{$items->task}}">
-                            <div id="task" class="form-text">Update your task.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="deadline" class="form-label">
-                                <h6>Deadline</h6>
-                            </label>
-                            <input type="time" class="form-control" id="deadline" name="deadline" value="{{$items->deadline}}">
-                            <div id="task" class="form-text">Update the last time to complete your task.</div>
-                        </div>
-                        <button type="submit" class="btn btn-primary mb-3">Update Task</button>
-                        <h6 class="page-title">{{session('message')}}</h6>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
-</div>
-
+</section>
 @endsection
